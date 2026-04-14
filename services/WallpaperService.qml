@@ -17,15 +17,15 @@ Singleton {
         if (!path) return;
         currentWallpaper = path;
         
-        // Using swww for transitions - assumes swww-daemon is running
+        // Using awww for transitions
         Quickshell.execDetached([
-            "swww", "img", path,
+            "awww", "img", path,
             "--transition-type", "grow",
             "--transition-pos", "top",
             "--transition-duration", "1.5"
         ]);
         
-        console.log("Applied wallpaper: " + path);
+        console.log("Applied wallpaper via awww: " + path);
     }
 
     function applyRandom() {

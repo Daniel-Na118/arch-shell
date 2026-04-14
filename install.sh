@@ -15,8 +15,8 @@ echo -e "${SET_COLOR_BLUE}🚀 Starting Arch-Shell Deployment...${SET_COLOR_RESE
 TARGET_DIR="$HOME/.config/quickshell/arch-shell"
 SOURCE_DIR="$(dirname "$(readlink -f "$0")")"
 
-# 2. Check for Dependencies
-dependencies=("quickshell" "fd" "grim" "slurp" "wl-copy" "cliphist" "swww" "matugen" "jq" "notify-send")
+# 2. Check for Dependencies (Including awww instead of swww)
+dependencies=("quickshell" "fd" "grim" "slurp" "wl-copy" "cliphist" "awww" "matugen" "jq" "notify-send")
 missing_deps=()
 
 echo -e "\n${SET_COLOR_BLUE}🔍 Checking dependencies...${SET_COLOR_RESET}"
@@ -32,7 +32,7 @@ done
 if [ ${#missing_deps[@]} -ne 0 ]; then
     echo -e "\n${SET_COLOR_YELLOW}⚠️  Warning: Some dependencies are missing.${SET_COLOR_RESET}"
     echo -e "For official packages: ${SET_COLOR_GREEN}sudo pacman -S fd grim slurp wl-copy cliphist jq libnotify${SET_COLOR_RESET}"
-    echo -e "For AUR packages: ${SET_COLOR_GREEN}yay -S swww matugen-bin quickshell-git${SET_COLOR_RESET}"
+    echo -e "For AUR packages: ${SET_COLOR_GREEN}yay -S awww matugen-bin quickshell-git${SET_COLOR_RESET}"
 fi
 
 # 3. Create Target Directory
@@ -56,4 +56,4 @@ echo -e "  quickshell -c arch-shell"
 echo -e "\n${SET_COLOR_YELLOW}To launch on Hyprland startup, add this to your hyprland.conf:${SET_COLOR_RESET}"
 echo -e "  exec-once = quickshell -c arch-shell"
 
-echo -e "\n${SET_COLOR_BLUE}RICE! 🍚${SET_COLOR_RESET}"
+echo -e "\n${SET_COLOR_BLUE}Enjoy your custom rice! 🍚${SET_COLOR_RESET}"

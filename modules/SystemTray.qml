@@ -15,8 +15,8 @@ PanelWindow {
     anchors.right: true
     margins { top: 10; right: 240 } // Shifted left to make room for clock
     
-    width: contentRow.implicitWidth + 24
-    height: 44
+    implicitWidth: contentRow.implicitWidth + 24
+    implicitHeight: 44
     color: "transparent"
     
     visible: trayRepeater.count > 0
@@ -29,7 +29,6 @@ PanelWindow {
         border.color: ThemeService.colors.surface0
         border.width: 1
         
-        // Move opacity animation here
         opacity: trayWindow.visible ? 1.0 : 0.0
         Behavior on opacity { NumberAnimation { duration: 300 } }
 
@@ -93,7 +92,4 @@ PanelWindow {
             }
         }
     }
-    
-    // Width behavior is fine on Window
-    Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
 }

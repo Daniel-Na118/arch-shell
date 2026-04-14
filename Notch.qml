@@ -25,7 +25,7 @@ PanelWindow {
     anchors.right: true
     
     // Height follows the expanded state
-    height: expanded ? expandedHeight : compactHeight
+    implicitHeight: expanded ? expandedHeight : compactHeight
     color: "transparent"
 
     // The actual Notch component centered in the full-width window

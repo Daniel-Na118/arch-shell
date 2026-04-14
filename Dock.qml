@@ -26,7 +26,7 @@ PanelWindow {
     anchors.bottom: true
     anchors.left: true
     anchors.right: true
-    height: 64
+    implicitHeight: 64
     color: "transparent"
 
     property real revealProgress: isHovered ? 1 : 0
@@ -103,7 +103,7 @@ PanelWindow {
         anchors.bottom: true
         anchors.left: true
         anchors.right: true
-        height: 10
+        implicitHeight: 10
         color: "transparent"
         
         MouseArea {

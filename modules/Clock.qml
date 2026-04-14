@@ -13,8 +13,8 @@ PanelWindow {
     anchors.right: true
     margins { top: 10; right: 20 }
     
-    width: contentRow.implicitWidth + 24
-    height: 44
+    implicitWidth: contentRow.implicitWidth + 24
+    implicitHeight: 44
     color: "transparent"
 
     Rectangle {

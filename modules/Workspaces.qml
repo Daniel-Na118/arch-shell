@@ -15,14 +15,14 @@ PanelWindow {
     anchors.left: true
     margins { top: 10; left: 20 }
     
-    width: contentRow.implicitWidth + 24
-    height: 44
+    implicitWidth: contentRow.implicitWidth + 24
+    implicitHeight: 44
     color: "transparent"
 
     // Scroll to switch workspaces
     MouseArea {
         anchors.fill: parent
-        onWheel: (wheel) => {
+        onWheel: function(wheel) {
             if (wheel.angleDelta.y > 0) Quickshell.execDetached(["hyprctl", "dispatch", "workspace", "e-1"]);
             else Quickshell.execDetached(["hyprctl", "dispatch", "workspace", "e+1"]);
         }
@@ -51,11 +51,11 @@ PanelWindow {
                     
                     // Filter toplevels for THIS workspace
                     readonly property var wsToplevels: {
-                        return Hyprland.toplevels.values.filter(t => t.workspace && t.workspace.id === wsId);
+                        return Hyprland.toplevels.values.filter(function(t) { return t.workspace && t.workspace.id === wsId; });
                     }
                     readonly property bool isOccupied: wsToplevels.length > 0
 
-                    // Dynamic Width: Wider if active OR if it contains icons
+                    // Dynamic Width
                     implicitWidth: {
                         if (isActive) return Math.max(32, (wsToplevels.length * 20) + 12);
                         if (isOccupied) return (wsToplevels.length * 20) + 12;
@@ -102,7 +102,7 @@ PanelWindow {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: Quickshell.execDetached(["hyprctl", "dispatch", "workspace", wsId.toString()])
+                        onClicked: function() { Quickshell.execDetached(["hyprctl", "dispatch", "workspace", wsId.toString()]); }
                     }
                 }
             }

@@ -56,4 +56,4 @@ echo -e "  quickshell -c arch-shell"
 echo -e "\n${SET_COLOR_YELLOW}To launch on Hyprland startup, add this to your hyprland.conf:${SET_COLOR_RESET}"
 echo -e "  exec-once = quickshell -c arch-shell"
 
-echo -e "\n${SET_COLOR_BLUE}Enjoy your custom rice! 🍚${SET_COLOR_RESET}"
+echo -e "\n${SET_COLOR_BLUE}RICE! 🍚${SET_COLOR_RESET}"

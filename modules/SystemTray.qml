@@ -1,17 +1,19 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Services.SystemTray
 import Quickshell.Widgets
 import "../services"
 
-ShellWindow {
+PanelWindow {
     id: trayWindow
 
     // Window Setup
-    level: ShellWindow.Overlay
-    anchor: Qt.AlignTop | Qt.AlignRight
-    margins { top: 10; right: 240 }
+    WlrLayershell.layer: WlrLayershell.Overlay
+    anchors.top: true
+    anchors.right: true
+    margins { top: 10; right: 240 } // Shifted left to make room for clock
     
     width: contentRow.implicitWidth + 24
     height: 44

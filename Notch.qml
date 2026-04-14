@@ -1,12 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import "services"
 import "modules"
 
-ShellWindow {
+PanelWindow {
     id: notch
 
     property bool expanded: false
@@ -18,15 +19,17 @@ ShellWindow {
     property int expandedHeight: 640
 
     // Window setup
-    level: ShellWindow.Overlay
-    anchor: Qt.AlignTop | Qt.AlignHCenter
+    WlrLayershell.layer: WlrLayershell.Overlay
+    anchors.top: true
+    anchors.horizontalCenter: true
+    
     width: expanded ? expandedWidth : (Mpris.hasPlayer && Mpris.isPlaying ? 400 : (Hyprland.activeToplevel ? compactWidth : 180))
     height: expanded ? expandedHeight : compactHeight
     color: "transparent"
     
     // Smooth transitions
-    Behavior on width { NumberAnimation { duration: 400; easing.type: Easing.OutBack } }
-    Behavior on height { NumberAnimation { duration: 400; easing.type: Easing.OutBack } }
+    Behavior on width { NumberAnimation { duration: 450; easing.bezierCurve: [0.4, 0, 0.2, 1] } }
+    Behavior on height { NumberAnimation { duration: 450; easing.bezierCurve: [0.4, 0, 0.2, 1] } }
 
     Rectangle {
         id: body
@@ -176,7 +179,6 @@ ShellWindow {
                     // View 0: Dashboard
                     ColumnLayout {
                         spacing: 20
-                        
                         // Media Player
                         Rectangle {
                             Layout.fillWidth: true; height: 120; color: ThemeService.colors.surface0; radius: 20; visible: Mpris.hasPlayer

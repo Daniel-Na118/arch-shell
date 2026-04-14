@@ -1,16 +1,18 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import "../services"
 
-ShellWindow {
+PanelWindow {
     id: workspacesWindow
 
     // Window Setup
-    level: ShellWindow.Overlay
-    anchor: Qt.AlignTop | Qt.AlignLeft
+    WlrLayershell.layer: WlrLayershell.Overlay
+    anchors.top: true
+    anchors.left: true
     margins { top: 10; left: 20 }
     
     width: contentRow.implicitWidth + 24

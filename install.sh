@@ -30,8 +30,9 @@ for dep in "${dependencies[@]}"; do
 done
 
 if [ ${#missing_deps[@]} -ne 0 ]; then
-    echo -e "\n${SET_COLOR_YELLOW}⚠️  Warning: Some dependencies are missing. Please install them for full functionality:${SET_COLOR_RESET}"
-    echo -e "  sudo pacman -S ${missing_deps[*]}"
+    echo -e "\n${SET_COLOR_YELLOW}⚠️  Warning: Some dependencies are missing.${SET_COLOR_RESET}"
+    echo -e "For official packages: ${SET_COLOR_GREEN}sudo pacman -S fd grim slurp wl-copy cliphist jq libnotify${SET_COLOR_RESET}"
+    echo -e "For AUR packages: ${SET_COLOR_GREEN}yay -S swww matugen-bin quickshell-git${SET_COLOR_RESET}"
 fi
 
 # 3. Create Target Directory
@@ -48,11 +49,11 @@ chmod +x "$TARGET_DIR/scripts/screenshot.sh"
 find "$TARGET_DIR" -name "*.sh" -exec chmod +x {} +
 
 # 6. Final Instructions
-echo -e "\n${SET_COLOR_GREEN}✅ Arch-Shell successfully installed!${SET_COLOR_RESET}"
-echo -e "\n${SET_COLOR_YELLOW}To start the shell manually:${SET_COLOR_RESET}"
-echo -e "  quickshell -c $TARGET_DIR/shell.qml"
+echo -e "\n${SET_COLOR_GREEN}✅ Arch-Shell files copied to $TARGET_DIR${SET_COLOR_RESET}"
+echo -e "\n${SET_COLOR_YELLOW}To start the shell:${SET_COLOR_RESET}"
+echo -e "  quickshell -c arch-shell"
 
 echo -e "\n${SET_COLOR_YELLOW}To launch on Hyprland startup, add this to your hyprland.conf:${SET_COLOR_RESET}"
-echo -e "  exec-once = quickshell -c ~/.config/quickshell/arch-shell/shell.qml"
+echo -e "  exec-once = quickshell -c arch-shell"
 
-echo -e "\n${SET_COLOR_BLUE}RICE! 🍚${SET_COLOR_RESET}"
+echo -e "\n${SET_COLOR_BLUE}Enjoy your custom rice! 🍚${SET_COLOR_RESET}"

@@ -1,14 +1,16 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
 import "../services"
 
-ShellWindow {
+PanelWindow {
     id: clockWindow
 
     // Window Setup
-    level: ShellWindow.Overlay
-    anchor: Qt.AlignTop | Qt.AlignRight
+    WlrLayershell.layer: WlrLayershell.Overlay
+    anchors.top: true
+    anchors.right: true
     margins { top: 10; right: 20 }
     
     width: contentRow.implicitWidth + 24

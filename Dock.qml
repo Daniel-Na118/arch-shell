@@ -1,11 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import "services"
 
-ShellWindow {
+PanelWindow {
     id: dockWindow
 
     // Configuration
@@ -21,8 +22,9 @@ ShellWindow {
     ]
 
     // Window Setup
-    level: ShellWindow.Overlay
-    anchor: Qt.AlignBottom | Qt.AlignHCenter
+    WlrLayershell.layer: WlrLayershell.Overlay
+    anchors.bottom: true
+    anchors.horizontalCenter: true
     width: contentRow.implicitWidth + 32
     height: 64
     color: "transparent"
@@ -30,12 +32,14 @@ ShellWindow {
     property real revealProgress: isHovered ? 1 : 0
     Behavior on revealProgress { NumberAnimation { duration: 300; easing.type: Easing.OutExpo } }
     
-    y: screen.height - (height * revealProgress) + 4
+    margins.bottom: - (height * (1 - revealProgress)) + 4
 
-    ShellWindow {
+    // Hover area
+    PanelWindow {
         id: hoverArea
-        level: ShellWindow.Overlay
-        anchor: Qt.AlignBottom | Qt.AlignHCenter
+        WlrLayershell.layer: WlrLayershell.Overlay
+        anchors.bottom: true
+        anchors.horizontalCenter: true
         width: dockWindow.width
         height: 10
         color: "transparent"

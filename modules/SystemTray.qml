@@ -28,6 +28,10 @@ PanelWindow {
         radius: 22
         border.color: ThemeService.colors.surface0
         border.width: 1
+        
+        // Move opacity animation here
+        opacity: trayWindow.visible ? 1.0 : 0.0
+        Behavior on opacity { NumberAnimation { duration: 300 } }
 
         RowLayout {
             id: contentRow
@@ -56,7 +60,7 @@ PanelWindow {
                         Behavior on scale { NumberAnimation { duration: 200 } }
                     }
 
-                    onClicked: (event) => {
+                    onClicked: function(event) {
                         if (event.button === Qt.LeftButton) {
                             modelData.activate();
                         } else {
@@ -90,6 +94,6 @@ PanelWindow {
         }
     }
     
-    Behavior on opacity { NumberAnimation { duration: 300 } }
+    // Width behavior is fine on Window
     Behavior on width { NumberAnimation { duration: 300; easing.type: Easing.OutBack } }
 }

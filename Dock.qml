@@ -21,26 +21,88 @@ PanelWindow {
         "spotify"
     ]
 
-    // Window Setup
+    // Window Setup - Full width to allow centering
     WlrLayershell.layer: WlrLayershell.Overlay
     anchors.bottom: true
-    anchors.horizontalCenter: true
-    width: contentRow.implicitWidth + 32
+    anchors.left: true
+    anchors.right: true
     height: 64
     color: "transparent"
 
     property real revealProgress: isHovered ? 1 : 0
     Behavior on revealProgress { NumberAnimation { duration: 300; easing.type: Easing.OutExpo } }
     
-    margins.bottom: - (height * (1 - revealProgress)) + 4
+    // Centered Content Item
+    Item {
+        id: dockContainer
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: contentRow.implicitWidth + 32
+        height: parent.height
+        
+        // Offset the whole container for auto-hide
+        y: (parent.height * (1 - revealProgress))
 
-    // Hover area
+        Rectangle {
+            id: body
+            anchors.fill: parent
+            color: ThemeService.colors.base
+            radius: 18
+            border.color: ThemeService.colors.surface0
+            border.width: 1
+            opacity: dockWindow.revealProgress
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onEntered: dockWindow.isHovered = true
+                onExited: dockWindow.isHovered = false
+            }
+
+            RowLayout {
+                id: contentRow
+                anchors.centerIn: parent
+                spacing: dockWindow.spacing
+
+                Repeater {
+                    model: dockWindow.pinnedApps
+                    delegate: DockItem {
+                        appId: modelData
+                        isPinned: true
+                    }
+                }
+
+                Rectangle {
+                    width: 1
+                    height: 24
+                    color: ThemeService.colors.surface0
+                    visible: runningAppsRepeater.count > 0 && dockWindow.pinnedApps.length > 0
+                }
+
+                Repeater {
+                    id: runningAppsRepeater
+                    model: {
+                        return Hyprland.toplevels.values.filter(function(t) {
+                            return !dockWindow.pinnedApps.includes(t.id) && 
+                                   !dockWindow.pinnedApps.includes(t.initialClass);
+                        });
+                    }
+                    delegate: DockItem {
+                        appId: modelData.id
+                        toplevel: modelData
+                        isPinned: false
+                    }
+                }
+            }
+        }
+    }
+
+    // Hover area window
     PanelWindow {
         id: hoverArea
         WlrLayershell.layer: WlrLayershell.Overlay
         anchors.bottom: true
-        anchors.horizontalCenter: true
-        width: dockWindow.width
+        anchors.left: true
+        anchors.right: true
         height: 10
         color: "transparent"
         
@@ -51,59 +113,6 @@ PanelWindow {
         }
     }
 
-    Rectangle {
-        id: body
-        anchors.fill: parent
-        color: ThemeService.colors.base
-        radius: 18
-        border.color: ThemeService.colors.surface0
-        border.width: 1
-        opacity: dockWindow.revealProgress
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            onEntered: dockWindow.isHovered = true
-            onExited: dockWindow.isHovered = false
-        }
-
-        RowLayout {
-            id: contentRow
-            anchors.centerIn: parent
-            spacing: dockWindow.spacing
-
-            Repeater {
-                model: dockWindow.pinnedApps
-                delegate: DockItem {
-                    appId: modelData
-                    isPinned: true
-                }
-            }
-
-            Rectangle {
-                width: 1
-                height: 24
-                color: ThemeService.colors.surface0
-                visible: runningAppsRepeater.count > 0 && dockWindow.pinnedApps.length > 0
-            }
-
-            Repeater {
-                id: runningAppsRepeater
-                model: {
-                    return Hyprland.toplevels.values.filter(t => {
-                        return !dockWindow.pinnedApps.includes(t.id) && 
-                               !dockWindow.pinnedApps.includes(t.initialClass);
-                    });
-                }
-                delegate: DockItem {
-                    appId: modelData.id
-                    toplevel: modelData
-                    isPinned: false
-                }
-            }
-        }
-    }
-
     component DockItem: Rectangle {
         id: itemRoot
         required property string appId
@@ -111,10 +120,12 @@ PanelWindow {
         property bool isPinned: false
         
         readonly property bool isRunning: toplevel !== null || 
-                                         Hyprland.toplevels.values.some(t => t.id === appId || t.initialClass === appId)
+                                         Hyprland.toplevels.values.some(function(t) { return t.id === appId || t.initialClass === appId; })
         
-        readonly property var activeToplevel: toplevel || 
-                                              Hyprland.toplevels.values.find(t => t.id === appId || t.initialClass === appId)
+        readonly property var activeToplevel: {
+            if (toplevel) return toplevel;
+            return Hyprland.toplevels.values.find(function(t) { return t.id === appId || t.initialClass === appId; });
+        }
 
         width: dockWindow.iconSize + 8
         height: dockWindow.iconSize + 8
@@ -150,7 +161,7 @@ PanelWindow {
             id: mouseArea
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: {
+            onClicked: function() {
                 if (itemRoot.isRunning) {
                     itemRoot.activeToplevel.focus()
                 } else if (itemRoot.entry) {

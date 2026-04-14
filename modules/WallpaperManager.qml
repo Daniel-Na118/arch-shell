@@ -25,16 +25,16 @@ Item {
                 Layout.fillWidth: true
                 height: 40
                 radius: 12
-                color: "#313244"
+                color: ThemeService.colors.surface0
                 
                 RowLayout {
                     anchors.fill: parent
                     anchors.leftMargin: 12
-                    Text { text: "󰍉"; color: "#89b4fa"; font.pixelSize: 16 }
+                    Text { text: "󰍉"; color: ThemeService.colors.blue; font.pixelSize: 16 }
                     TextInput {
                         id: searchInput
                         Layout.fillWidth: true
-                        color: "#cdd6f4"
+                        color: ThemeService.colors.text
                         font.pixelSize: 14
                         clip: true
                         onTextChanged: wallpaperRoot.searchText = text
@@ -46,11 +46,11 @@ Item {
                 width: 40
                 height: 40
                 radius: 12
-                color: "#313244"
+                color: ThemeService.colors.surface0
                 Text {
                     anchors.centerIn: parent
                     text: "󰒝"
-                    color: "#a6e3a1"
+                    color: ThemeService.colors.green
                     font.pixelSize: 18
                 }
                 MouseArea {
@@ -76,9 +76,9 @@ Item {
                         width: (parent.width - 12) / 2
                         height: width * 0.6
                         radius: 12
-                        color: "#313244"
+                        color: ThemeService.colors.surface0
                         clip: true
-                        border.color: WallpaperService.currentWallpaper === filePath ? "#89b4fa" : "transparent"
+                        border.color: WallpaperService.currentWallpaper === filePath ? ThemeService.colors.blue : "transparent"
                         border.width: 2
 
                         Image {
@@ -95,7 +95,7 @@ Item {
                             height: 24
                             gradient: Gradient {
                                 GradientStop { position: 0.0; color: "transparent" }
-                                GradientStop { position: 1.0; color: "#1e1e2e" }
+                                GradientStop { position: 1.0; color: ThemeService.colors.base }
                             }
                         }
 
@@ -105,7 +105,7 @@ Item {
                             anchors.right: parent.right
                             anchors.margins: 6
                             text: fileName
-                            color: "#cdd6f4"
+                            color: ThemeService.colors.text
                             font.pixelSize: 10
                             elide: Text.ElideRight
                         }

@@ -15,7 +15,7 @@ echo -e "${SET_COLOR_BLUE}🚀 Starting Arch-Shell Deployment...${SET_COLOR_RESE
 TARGET_DIR="$HOME/.config/quickshell/arch-shell"
 SOURCE_DIR="$(dirname "$(readlink -f "$0")")"
 
-# 2. Check for Dependencies (Including awww instead of swww)
+# 2. Check for Dependencies
 dependencies=("quickshell" "fd" "grim" "slurp" "wl-copy" "cliphist" "awww" "matugen" "jq" "notify-send")
 missing_deps=()
 
@@ -43,8 +43,11 @@ mkdir -p "$TARGET_DIR"
 echo -e "${SET_COLOR_BLUE}📦 Copying files...${SET_COLOR_RESET}"
 cp -r "$SOURCE_DIR"/* "$TARGET_DIR/"
 
-# 5. Set Permissions
-echo -e "${SET_COLOR_BLUE}🔐 Setting executable permissions...${SET_COLOR_RESET}"
+# 5. Fix Line Endings and Permissions
+echo -e "${SET_COLOR_BLUE}🔐 Fixing permissions and line endings...${SET_COLOR_RESET}"
+if command -v dos2unix &> /dev/null; then
+    find "$TARGET_DIR" -type f -exec dos2unix {} + &> /dev/null
+fi
 chmod +x "$TARGET_DIR/scripts/screenshot.sh"
 find "$TARGET_DIR" -name "*.sh" -exec chmod +x {} +
 
@@ -56,4 +59,4 @@ echo -e "  quickshell -c arch-shell"
 echo -e "\n${SET_COLOR_YELLOW}To launch on Hyprland startup, add this to your hyprland.conf:${SET_COLOR_RESET}"
 echo -e "  exec-once = quickshell -c arch-shell"
 
-echo -e "\n${SET_COLOR_BLUE}Enjoy your custom rice! 🍚${SET_COLOR_RESET}"
+echo -e "\n${SET_COLOR_BLUE}RICE! 🍚${SET_COLOR_RESET}"

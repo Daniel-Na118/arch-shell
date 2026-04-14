@@ -21,7 +21,7 @@ Item {
             Layout.fillWidth: true
             Text {
                 text: calendarRoot.monthNames[calendarRoot.displayDate.getMonth()] + " " + calendarRoot.displayDate.getFullYear()
-                color: "#cdd6f4"
+                color: ThemeService.colors.text
                 font.pixelSize: 20
                 font.bold: true
                 Layout.fillWidth: true
@@ -30,13 +30,13 @@ Item {
             Row {
                 spacing: 10
                 Rectangle {
-                    width: 32; height: 32; radius: 16; color: "#313244"
-                    Text { anchors.centerIn: parent; text: "󰁍"; color: "#cdd6f4"; font.pixelSize: 16 }
+                    width: 32; height: 32; radius: 16; color: ThemeService.colors.surface0
+                    Text { anchors.centerIn: parent; text: "󰁍"; color: ThemeService.colors.text; font.pixelSize: 16 }
                     MouseArea { anchors.fill: parent; onClicked: calendarRoot.displayDate = new Date(calendarRoot.displayDate.getFullYear(), calendarRoot.displayDate.getMonth() - 1, 1) }
                 }
                 Rectangle {
-                    width: 32; height: 32; radius: 16; color: "#313244"
-                    Text { anchors.centerIn: parent; text: "󰁔"; color: "#cdd6f4"; font.pixelSize: 16 }
+                    width: 32; height: 32; radius: 16; color: ThemeService.colors.surface0
+                    Text { anchors.centerIn: parent; text: "󰁔"; color: ThemeService.colors.text; font.pixelSize: 16 }
                     MouseArea { anchors.fill: parent; onClicked: calendarRoot.displayDate = new Date(calendarRoot.displayDate.getFullYear(), calendarRoot.displayDate.getMonth() + 1, 1) }
                 }
             }
@@ -51,7 +51,7 @@ Item {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
                     text: modelData
-                    color: "#89b4fa"
+                    color: ThemeService.colors.blue
                     font.pixelSize: 12
                     font.bold: true
                 }
@@ -81,13 +81,13 @@ Item {
                                                   date.getFullYear() === calendarRoot.today.getFullYear()
                     readonly property bool isCurrentMonth: date.getMonth() === calendarRoot.displayDate.getMonth()
 
-                    color: isToday ? "#89b4fa" : (isCurrentMonth ? "transparent" : "transparent")
+                    color: isToday ? ThemeService.colors.blue : "transparent"
                     opacity: isCurrentMonth ? 1.0 : 0.3
 
                     Text {
                         anchors.centerIn: parent
                         text: date.getDate()
-                        color: isToday ? "#1e1e2e" : "#cdd6f4"
+                        color: isToday ? ThemeService.colors.base : ThemeService.colors.text
                         font.pixelSize: 14
                         font.bold: isToday
                     }

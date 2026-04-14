@@ -69,7 +69,7 @@ Singleton {
         }
     }
 
-    function formatBytes(kib: real): string {
+    function formatBytes(kib) {
         const mib = 1024;
         const gib = 1024 * 1024;
         if (kib >= gib) return (kib / gib).toFixed(1) + " GB";

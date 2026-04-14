@@ -15,7 +15,7 @@ Item {
 
         Text {
             text: "Current Workspace Overview"
-            color: "#cdd6f4"
+            color: ThemeService.colors.text
             font.pixelSize: 20
             font.bold: true
         }
@@ -41,9 +41,9 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: 6
-                    color: modelData.focused ? "#313244" : "#181825"
+                    color: modelData.focused ? ThemeService.colors.surface0 : ThemeService.colors.mantle
                     radius: 12
-                    border.color: modelData.focused ? "#89b4fa" : "#313244"
+                    border.color: modelData.focused ? ThemeService.colors.blue : ThemeService.colors.surface0
                     border.width: 1
 
                     ColumnLayout {
@@ -63,7 +63,7 @@ Item {
 
                             Text {
                                 text: modelData.title
-                                color: "#cdd6f4"
+                                color: ThemeService.colors.text
                                 font.pixelSize: 13
                                 font.bold: true
                                 elide: Text.ElideRight
@@ -75,13 +75,13 @@ Item {
                             Layout.fillWidth: true
                             
                             Rectangle {
-                                height: 20; radius: 4; color: "#45475a"
+                                height: 20; radius: 4; color: ThemeService.colors.surface1
                                 width: statusText.implicitWidth + 12
                                 Text {
                                     id: statusText
                                     anchors.centerIn: parent
                                     text: modelData.floating ? "Floating" : "Tiled"
-                                    color: "#a6adc8"; font.pixelSize: 10
+                                    color: ThemeService.colors.subtext0; font.pixelSize: 10
                                 }
                             }
                             
@@ -89,11 +89,11 @@ Item {
 
                             Text {
                                 text: "󰅖"
-                                color: "#f38ba8"
+                                color: ThemeService.colors.red
                                 font.pixelSize: 16
                                 MouseArea {
                                     anchors.fill: parent
-                                    onClicked: Quickshell.execDetached(["hyprctl", "dispatch", "closewindow", "address:0x" + modelData.HyprlandToplevel.address])
+                                    onClicked: Quickshell.execDetached(["hyprctl", "dispatch", "closewindow", "address:0x" + modelData.address])
                                 }
                             }
                         }
@@ -114,7 +114,7 @@ Item {
         Text {
             visible: windowGrid.count === 0
             text: "No windows open in this workspace"
-            color: "#585b70"
+            color: ThemeService.colors.surface2
             font.pixelSize: 14
             Layout.alignment: Qt.AlignHCenter
         }

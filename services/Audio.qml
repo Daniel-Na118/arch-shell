@@ -11,18 +11,20 @@ Singleton {
     readonly property bool muted: !!sink?.audio?.muted
     readonly property real volume: sink?.audio?.volume ?? 0
 
-    function setVolume(newVolume: real): void {
+    function setVolume(newVolume) {
         if (sink?.ready && sink?.audio) {
             sink.audio.muted = false;
             sink.audio.volume = Math.max(0, Math.min(1.0, newVolume));
         }
     }
 
-    function incrementVolume(amount: real = 0.05): void {
+    function incrementVolume(amount) {
+        if (amount === undefined) amount = 0.05;
         setVolume(volume + amount);
     }
 
-    function decrementVolume(amount: real = 0.05): void {
+    function decrementVolume(amount) {
+        if (amount === undefined) amount = 0.05;
         setVolume(volume - amount);
     }
 }
